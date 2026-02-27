@@ -2,6 +2,8 @@ package com.example.Thymeleaf.Demo.Service;
 
 import com.example.Thymeleaf.Demo.Model.Player;
 import com.example.Thymeleaf.Demo.repository.PlayerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,9 +23,20 @@ public class PlayerService {
         return repo.findAll();
     }
 
+    public Page<Player> getAllPlayersPageable(Pageable pageable) {
+
+        return repo.findAll(pageable);
+
+    }
+
     public void addPlayer(Player player) {
 
         repo.save(player);
+    }
+
+    public Page<Player> findPlayerByName(String name, Pageable page){
+
+        return repo.findByNameContainingIgnoreCase(name,page);
     }
 
     public Player getPlayerById(int id) {
